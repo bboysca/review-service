@@ -1,0 +1,36 @@
+runtime: php55
+api_version: 1
+
+env_variables:
+  #database connection
+  MYSQL_DSN: mysql:unix_socket=/cloudsql/{connection_name};dbname={db-name}
+  MYSQL_USER: {user}
+  MYSQL_PASSWORD: '{password}'
+
+  #company information: not utilized so much as of now, so ID can be whatever
+  COMPANY_NAME: '{company_name}'
+  COMPANY_ID: 1
+
+  ITUNES_REVIEWS_URL: 'https://itunes.apple.com/rss/customerreviews'
+  IOS_APP_ID: '{ios_app_id}'
+  IOS_STORE_ICON: '{slack_ios_icon}'
+
+  PLAY_TOKEN_URL: 'https://accounts.google.com/o/oauth2/token'
+  PLAY_REVIEWS_URL: 'https://www.googleapis.com/androidpublisher/v2/applications/'
+  PLAY_APP_ID: '{android_app_id}'
+  PLAY_REFRESH_TOKEN: '{refresh_token}'
+  PLAY_CLIENT_ID: '{client_id}'
+  PLAY_CLIENT_SECRET: '{client_secret}'
+  PLAY_STORE_ICON: '{slack_play_icon}'
+
+  BOT_NAME: 'review-bot'
+
+  #TODO Possible to override env variables based on environment (dev vs production)?
+  SLACK_CHANNEL_URL: '{slack_channel_url}'
+
+handlers:
+- url: /reviews/latest.*
+  script: LatestReviewController.php
+
+- url: /createTable/.*
+  script: DbSetup.php
